@@ -23,6 +23,8 @@ gem "haml", '3.0.0.rc.5'
 run "haml --rails ."
 gem 'rails3-generators', :git => 'http://github.com/andersjanmyr/rails3-generators.git'
 gem "formtastic", :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
+run "curl -L http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb > config/initializers/formtastic.rb"
+
 run "rm app/views/layouts/application.html.erb"
 file 'app/views/layouts/application.html.haml' , <<-EOT 
 !!!
@@ -38,8 +40,10 @@ EOT
 
 file 'public/stylesheets/sass/application.sass', <<-EOT
 @import formtastic_base.sass
-@import skintastic.sass
+.formtastic
+  +float-form
 EOT
+
 run "curl -L http://github.com/activestylus/formtastic-sass/raw/master/_formtastic_base.sass > public/stylesheets/sass/_formtastic_base.sass"
 run "curl -L http://github.com/activestylus/formtastic-sass/raw/master/_skintastic.sass > public/stylesheets/sass/_skintastic.sass"
 
