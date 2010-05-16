@@ -36,9 +36,12 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = javascript_include_tag :jquery
     = csrf_meta_tag
   %body
+  %body
     #root
       .container
         = yield
+    #footer
+      .container
 HAML
 
 
