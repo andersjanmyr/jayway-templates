@@ -74,11 +74,22 @@ application <<-GENERATORS
     end 
 GENERATORS
 
+# RVM
+# rvm_gemset_create_on_use_flag=1 must be set in ~/.rvmrc
+file ".rvmrc", <<-RVMRC
+rvm gemset use #{app_name}
+RVMRC
+
+ruby_default = 'ruby-1.9.2-head'
+run "rvm gemset create #{app_name}"
+run "rvm #{ruby_default}@#{app_name} gem install bundler"
+run "rvm #{ruby_default}@#{app_name} -S bundle install"
+
 # Run the generators
-run 'bundle install'  
-generate 'rspec:install'
-generate 'cucumber:skeleton', 'rspec', 'capybara'
-run 'compass create --app rails --sass-dir app/stylesheets --css-dir public/stylesheets .'
+run "rvm #{ruby_default}@#{app_name} -S rails g rspec:install"
+run "rvm #{ruby_default}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
+run "rvm #{ruby_default}@#{app_name} -S compass create --app rails --sass-dir app/stylesheets --css-dir public/stylesheets ."
+
 
 # Git
 run 'touch db/.gitkeep lib/tasks/.gitkeep log/.gitkeep tmp/.gitkeep public/stylesheets/.gitkeep vendor/plugins/.gitkeep'
