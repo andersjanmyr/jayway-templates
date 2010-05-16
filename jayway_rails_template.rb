@@ -80,7 +80,7 @@ file ".rvmrc", <<-RVMRC
 rvm gemset use #{app_name}
 RVMRC
 
-ruby_default = 'ruby-1.9.2-head'
+ruby_default = /\e\[32m(.*)\e\[m/.match(%x{rvm list default})[1]
 run "rvm gemset create #{app_name}"
 run "rvm #{ruby_default}@#{app_name} gem install bundler"
 run "rvm #{ruby_default}@#{app_name} -S bundle install"
