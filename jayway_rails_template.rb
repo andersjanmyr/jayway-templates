@@ -28,7 +28,7 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
 !!!
 %html
   %head
-    %title Jay
+    %title #{app_name.capitalize}
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
@@ -36,8 +36,9 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = javascript_include_tag :jquery
     = csrf_meta_tag
   %body
-    .container  
-      = yield
+    #root
+      .container
+        = yield
 HAML
 
 
