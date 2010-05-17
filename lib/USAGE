@@ -1,0 +1,19 @@
+Description:
+    Creates haml files using formtastic as a form builder
+
+Example:
+	rails g jayway_haml user
+
+    create  app/views/users
+    create  app/views/users/index.html.haml
+    create  app/views/users/edit.html.haml
+    create  app/views/users/show.html.haml
+    create  app/views/users/new.html.haml
+    create  app/views/users/_form.html.haml
+
+Example: 
+	rails g formtastic_haml:controller user index
+	
+	exist  app/views/user
+    create  app/views/user/index.html.haml
+    
