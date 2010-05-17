@@ -28,21 +28,45 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
 !!!
 %html
   %head
-    %title #{app_name.capitalize}
+    %title= yield(:title)
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag :jquery
     = csrf_meta_tag
-  %body
-  %body
-    #root
-      .container
-        = yield
+    = yield(:head)
+  %body.bp
+    #container
+      #header
+        = yield(:title)
+      #sidebar
+      #content
+          = yield
+      #container-footer
     #footer
-      .container
 HAML
+
+inject_into_file 'app/helpers/application_helper.rb',  :after => 'module ApplicationHelper' do
+  <<-APPLICATION_HELPER
+  def title(page_title, show_title = true)
+    @content_for_title = page_title.to_s
+    @show_title = show_title
+  end
+  
+  def show_title?
+    @show_title
+  end
+  
+  def stylesheet(*args)
+    content_for(:head) { stylesheet_link_tag(*args) }
+  end
+  
+  def javascript(*args)
+    content_for(:head) { javascript_include_tag(*args) }
+  end
+  APPLICATION_HELPER
+end
 
 
 # Replace prototype with jQuery.
@@ -93,7 +117,7 @@ run "rvm #{ruby_default}@#{app_name} -S bundle install"
 # Run the generators
 run "rvm #{ruby_default}@#{app_name} -S rails g rspec:install"
 run "rvm #{ruby_default}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
-run "rvm #{ruby_default}@#{app_name} -S compass create --app rails --sass-dir app/stylesheets --css-dir public/stylesheets ."
+run "rvm #{ruby_default}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
 
 
 # Git
