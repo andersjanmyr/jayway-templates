@@ -37,25 +37,23 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = csrf_meta_tag
     = yield(:head)
   %body.bp
-    #container
+    #container.showgrid
       #header
-        = yield(:title)
+        %h1= yield(:title) || "Hello my name is fred"        
       #sidebar
+        This is the sidebar
       #content
         = yield
-      #container-footer
+      #container-footer      
     #footer
+      This is the footer
 HAML
 
 inject_into_file 'app/helpers/application_helper.rb',  :after => 'module ApplicationHelper' do
   <<-APPLICATION_HELPER
-  def title(page_title, show_title = true)
-    @content_for_title = page_title.to_s
-    @show_title = show_title
-  end
   
-  def show_title?
-    @show_title
+  def title(page_title)
+    content_for(:title, page_title.to_s)
   end
   
   def stylesheet(*args)
@@ -117,6 +115,96 @@ run "rvm #{current_ruby}@#{app_name} -S bundle install"
 run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
 run "rvm #{current_ruby}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
 run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
+
+# Replace the compass/blueprint stylesheets
+remove_file 'app/stylesheets/partials/_two_col.scss'
+
+remove_file 'app/stylesheets/ie.scss'
+file 'app/stylesheets/ie.scss', <<-IE_SCSS
+@import "blueprint";
+
+//@include blueprint-ie;
+IE_SCSS
+
+remove_file 'app/stylesheets/partials/_base.scss'
+file 'app/stylesheets/partials/_base.scss', <<-BASE_SCSS
+$blueprint_liquid_grid_columns: 24;
+$blueprint_liquid_container_width: 80%;
+$blueprint_liquid_container_min_width: 950px;
+BASE_SCSS
+
+remove_file 'app/stylesheets/partials/_form.scss'
+file 'app/stylesheets/partials/_form.scss', <<-FORM_SCSS
+form {
+  @include column(16);
+  @include append(8);
+  @include last;
+  @include blueprint-form;  
+}
+
+form label {
+  display:block;
+}
+
+form li {
+  list-style: none;
+}
+FORM_SCSS
+
+remove_file 'app/stylesheets/partials/_page.scss'
+file 'app/stylesheets/partials/_page.scss', <<-PAGE_SCSS
+@import "blueprint/debug";
+
+@include sticky-footer(54px, "#container", "#container-footer", "#footer");
+
+body.bp {
+  @include blueprint-typography(true);
+  @include blueprint-utilities;
+  @include blueprint-debug;
+  @include blueprint-interaction; 
+
+  #container {
+    @include column(24, true);
+    #header {
+      @include column(24, true);    
+    }
+    #sidebar {
+      @include column(4);
+    }
+
+    #content {
+      @include column(20, true);
+    }
+    #container-footer {
+      @include column(24, true);
+    }
+  }
+  #footer {
+    @include column(24, true);
+  }
+}
+PAGE_SCSS
+
+remove_file 'app/stylesheets/print.scss'
+file 'app/stylesheets/print.scss', <<-PRINT_SCSS
+@import "blueprint";
+
+body.bp {
+  @include blueprint-print(true); }
+PRINT_SCSS
+
+remove_file 'app/stylesheets/screen.scss'
+file 'app/stylesheets/screen.scss', <<-SCREEN_SCSS
+@import "blueprint/reset";
+
+@import "partials/base"; // Load before blueprint, configures variables
+
+@import "compass/layout";
+@import "blueprint";
+
+@import "partials/page";
+@import "partials/form";
+SCREEN_SCSS
 
 
 # Git
