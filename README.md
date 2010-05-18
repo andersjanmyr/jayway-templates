@@ -5,7 +5,7 @@ It is used to create a new project with Jayway specific defaults. It creates the
 
 ### Usage
 
-    rails NAME -m http://github.com/andersjanmyr/rails_templates/raw/master/jayway_rails_template.rb
+    rails NAME -m http://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails_template.rb
 
 
 ### Requirements

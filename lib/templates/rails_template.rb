@@ -32,7 +32,7 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
-      = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag :jquery
     = csrf_meta_tag
     = yield(:head)
@@ -42,7 +42,7 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
         = yield(:title)
       #sidebar
       #content
-          = yield
+        = yield
       #container-footer
     #footer
 HAML
