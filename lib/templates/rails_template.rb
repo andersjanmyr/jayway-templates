@@ -18,7 +18,7 @@ gem 'cucumber', :group => :test
 
 # Install View
 gem 'haml', '3.0.2'
-gem 'jayway-templates'
+gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'compass'
