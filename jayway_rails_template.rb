@@ -18,7 +18,7 @@ gem 'cucumber', :group => :test
 
 # Install View
 gem 'haml', '3.0.2'
-gem 'rails3-generators', :git => 'http://github.com/andersjanmyr/rails3-generators.git'
+gem 'jayway-templates'
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'compass'
@@ -95,7 +95,7 @@ get 'http://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javasc
 application <<-GENERATORS
     config.generators do |g| 
       g.orm  :active_record  
-      g.template_engine :formtastic_haml  
+      g.template_engine :jayway  
       g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false 
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
