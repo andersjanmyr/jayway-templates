@@ -2,18 +2,18 @@
 
 %table
   %tr
-    <%- for attribute in attributes -%>
+<%- for attribute in attributes -%>
     %th <%= attribute.human_name %>
-    <%- end -%>
+<%- end -%>
     %th
     %th
     %th
 
   - @<%= plural_name %>.each do |<%= singular_name %>|
     %tr
-      <%- for attribute in attributes -%>
+<%- for attribute in attributes -%>
       %td= <%= singular_name %>.<%= attribute.name %>
-      <%- end -%>
+<%- end -%>
 
       %td= link_to 'Show', <%= singular_name %>
       %td= link_to 'Edit', edit_<%= singular_name %>_path(<%= singular_name %>)

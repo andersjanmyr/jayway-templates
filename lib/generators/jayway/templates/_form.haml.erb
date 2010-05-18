@@ -1,10 +1,10 @@
 = semantic_form_for @<%= singular_name %> do |form|
-  <%- if attributes.empty? -%>
+<%- if attributes.empty? -%>
   = form.inputs
-  <%- else -%>
+<%- else -%>
   = form.inputs do
-    <%- for attribute in attributes -%>
+<%- for attribute in attributes -%>
     = form.input :<%= attribute.name.gsub(/_id$/, '') %>
-    <%- end -%>
-  <%- end -%>
+<%- end -%>
+<%- end -%>
   = form.buttons
