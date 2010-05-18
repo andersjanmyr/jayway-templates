@@ -20,12 +20,32 @@ It is used to create a new project with Jayway specific defaults. It creates the
 * cucumber is installed for integration testing
 
 #### View
-* HAML replaces ERB
+* HAML replaces ERB, the generators are included in this repo
 * Formtastic for forms
 * SASS, with the new dialect SCCS replaces CSS
 * Compass, with Blueprint is used to get prepared CSS mixins and variables
 * jQuery and jQuery UI, replaces PrototypJS
 
 
+## Jayway Generators
+Creates HAML files using formtastic as a form builder
 
+### jayway:scaffold
+
+    rails g jayway:scaffold user
+
+    create  app/views/users
+    create  app/views/users/index.html.haml
+    create  app/views/users/edit.html.haml
+    create  app/views/users/show.html.haml
+    create  app/views/users/new.html.haml
+    create  app/views/users/_form.html.haml
+
+### jayway:controller
+
+    rails g jayway:controller user index dog
+  
+    exist  app/views/user
+    create  app/views/user/index.html.haml
+    create  app/views/user/dog.html.haml
 

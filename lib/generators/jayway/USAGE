@@ -2,7 +2,7 @@ Description:
     Creates haml files using formtastic as a form builder
 
 Example:
-	rails g jayway_haml user
+	rails g jayway:scaffold user
 
     create  app/views/users
     create  app/views/users/index.html.haml
@@ -12,8 +12,9 @@ Example:
     create  app/views/users/_form.html.haml
 
 Example: 
-	rails g formtastic_haml:controller user index
+	rails g jayway:controller user index dog
 	
 	exist  app/views/user
     create  app/views/user/index.html.haml
+    create  app/views/user/dog.html.haml
     
