@@ -3,12 +3,12 @@ lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
   
 Gem::Specification.new do |s|
-  s.name        = "jayway_templates"
+  s.name        = "jayway-templates"
   s.version     = 1.0
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Anders Janmyr"]
   s.email       = ["anders.janmyr@jayway.com"]
-  s.homepage    = "http://github.com/andersjanmyr/rails_templates"
+  s.homepage    = "http://github.com/andersjanmyr/jayway-templates"
   s.summary     = "Common Rails templates and generators for Jayway"
   s.description = s.summary
  

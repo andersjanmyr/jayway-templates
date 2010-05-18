@@ -1,15 +1,10 @@
+require 'generators/jayway'
 require 'rails/generators/erb/scaffold/scaffold_generator'
 
 module Jayway
   module Generators
-    class JaywayGenerator < Erb::Generators::ScaffoldGenerator
-
-      class_option :views, :type => :array
-      
-      def self.source_root
-        File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
-      end
-      
+    class ScaffoldGenerator < Erb::Generators::ScaffoldGenerator
+      extend TemplatePath
       
       def copy_layout_file
         return unless options[:layout]
