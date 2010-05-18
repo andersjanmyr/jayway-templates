@@ -104,20 +104,19 @@ application <<-GENERATORS
 GENERATORS
 
 # RVM
-# rvm_gemset_create_on_use_flag=1 must be set in ~/.rvmrc
 file ".rvmrc", <<-RVMRC
 rvm gemset use #{app_name}
 RVMRC
 
-ruby_default = /\e\[32m(.*)\e\[m/.match(%x{rvm list default})[1]
+current_ruby = /=> \e\[32m(.*)\e\[m/.match(%x{rvm list})[1]
 run "rvm gemset create #{app_name}"
-run "rvm #{ruby_default}@#{app_name} gem install bundler"
-run "rvm #{ruby_default}@#{app_name} -S bundle install"
+run "rvm #{current_ruby}@#{app_name} gem install bundler"
+run "rvm #{current_ruby}@#{app_name} -S bundle install"
 
 # Run the generators
-run "rvm #{ruby_default}@#{app_name} -S rails g rspec:install"
-run "rvm #{ruby_default}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
-run "rvm #{ruby_default}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
+run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
+run "rvm #{current_ruby}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
+run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
 
 
 # Git
