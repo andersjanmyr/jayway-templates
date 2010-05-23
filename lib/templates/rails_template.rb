@@ -113,7 +113,7 @@ run "rvm #{current_ruby}@#{app_name} -S bundle install"
 
 # Run the generators
 run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
-run "rvm #{current_ruby}@#{app_name} -S rails cucumber:skeleton --rspec --capybara"  
+run "rvm #{current_ruby}@#{app_name} -S rails g cucumber:skeleton --rspec --capybara"  
 run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
 
 # Replace the compass/blueprint stylesheets
