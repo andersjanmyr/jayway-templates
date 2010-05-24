@@ -17,7 +17,7 @@ gem 'launchy', :group => :test
 gem 'cucumber', :group => :test
 
 # Install View
-gem 'haml', '3.0.2'
+gem 'haml'
 gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
@@ -106,7 +106,7 @@ file ".rvmrc", <<-RVMRC
 rvm gemset use #{app_name}
 RVMRC
 
-current_ruby = /=> \e\[32m(.*)\e\[m/.match(%x{rvm list})[1]
+current_ruby =  /^(.*):/.match(%x{rvm info})[1]
 run "rvm gemset create #{app_name}"
 run "rvm #{current_ruby}@#{app_name} gem install bundler"
 run "rvm #{current_ruby}@#{app_name} -S bundle install"
