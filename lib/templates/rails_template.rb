@@ -15,6 +15,7 @@ gem 'cucumber', '0.7.2', :group => :test
 gem 'spork', :group => :test
 gem 'launchy', :group => :test
 gem 'cucumber', :group => :test
+gem 'pickle', :group => :test
 
 # Install View
 gem 'haml'
@@ -22,6 +23,9 @@ gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'compass'
+
+# Authentication
+gem 'devise', '1.1.rc1'
 
 remove_file 'app/views/layouts/application.html.erb'
 file 'app/views/layouts/application.html.haml' , <<-HAML 
