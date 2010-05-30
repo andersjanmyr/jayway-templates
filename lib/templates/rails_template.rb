@@ -3,8 +3,8 @@
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.8', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.8', :group => :test
+gem 'rspec', '>= 2.0.0.beta.9', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.9', :group => :test
 gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
 
 # Cucumber integration test
