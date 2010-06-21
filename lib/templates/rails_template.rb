@@ -1,10 +1,19 @@
 # Application template for Jayway projects
 
+#Development
+gem "ruby-debug19", :group => :development
+gem 'looksee', :group => :development
+gem 'wirble', :group => :development
+gem 'hirb', :group => :development
+gem 'map_by_method', :group => :development
+gem 'what_methods', :group => :development
+gem 'awesome_print', :group => :development
+
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.9', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.9', :group => :test
+gem 'rspec', '>= 2.0.0.beta.12', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.12', :group => :test
 gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
 
 # Cucumber integration test
@@ -23,6 +32,8 @@ gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'compass'
+gem 'responders'
+gem 'rails3-template'
 
 # Authentication
 gem 'devise', '1.1.rc1'
@@ -70,6 +81,18 @@ inject_into_file 'app/helpers/application_helper.rb',  :after => 'module Applica
   APPLICATION_HELPER
 end
 
+file 'lib/templates/haml/scaffold/_form.html.haml.erb', <<-FORM
+= semantic_form_for @<%= singular_name %> do |form|
+<%- if attributes.empty? -%>
+  = form.inputs
+<%- else -%>
+  = form.inputs do
+<%- for attribute in attributes -%>
+    = form.input :<%= attribute.name.gsub(/_id$/, '') %>
+<%- end -%>
+<%- end -%>
+  = form.buttons
+FORM
 
 # Replace prototype with jQuery.
 initializer 'jquery.rb', <<-JQUERY
@@ -97,7 +120,8 @@ get 'http://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javasc
 application <<-GENERATORS
     config.generators do |g| 
       g.orm  :active_record  
-      g.template_engine :jayway  
+      g.scaffold_controller :responders_controller  
+      g.template_engine :haml  
       g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false 
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
