@@ -65,19 +65,6 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
 HAML
 
 
-file 'lib/templates/haml/scaffold/_form.html.haml.erb', <<-FORM
-= semantic_form_for @<%= singular_name %> do |form|
-<%- if attributes.empty? -%>
-  = form.inputs
-<%- else -%>
-  = form.inputs do
-<%- for attribute in attributes -%>
-    = form.input :<%= attribute.name.gsub(/_id$/, '') %>
-<%- end -%>
-<%- end -%>
-  = form.buttons
-FORM
-
 # Replace prototype with jQuery.
 initializer 'jquery.rb', <<-JQUERY
 if Rails.env.development?
