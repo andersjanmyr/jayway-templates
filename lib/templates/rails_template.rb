@@ -48,7 +48,6 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
     = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
-    = javascript_include_tag :jquery
     = csrf_meta_tag
     = yield(:head)
   %body.bp
@@ -62,6 +61,8 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
       #container-footer      
     #footer
       This is the footer
+    = javascript_include_tag :jquery
+    = javascript_include_tag "#{params[:controller]}"
 HAML
 
 inject_into_file 'app/helpers/application_helper.rb',  :after => 'module ApplicationHelper' do
