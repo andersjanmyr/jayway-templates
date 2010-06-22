@@ -1,4 +1,5 @@
-- title "Edit <%= singular_name.titleize %>"
+- content_for :title do
+  Edit <%= singular_name.titleize %>
 
 = render 'form'
 

@@ -1,4 +1,5 @@
-- title "<%= singular_name.titleize %>"
+- content_for :title do
+  <%= singular_name.titleize %>
 
 <%- for attribute in attributes -%>
 %p

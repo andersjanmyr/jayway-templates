@@ -12,8 +12,8 @@ gem 'awesome_print', :group => :development
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.12', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.12', :group => :test
+gem 'rspec', '>= 2.0.0.beta.13', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.13', :group => :test
 gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
 
 # Cucumber integration test
@@ -33,7 +33,6 @@ gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :bran
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'compass'
 gem 'responders'
-gem 'rails3-template'
 
 # Authentication
 gem 'devise', '1.1.rc1'
@@ -53,7 +52,7 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
   %body.bp
     #container.showgrid
       #header
-        %h1= yield(:title) || "Hello my name is fred"        
+        %h1= yield(:title) || "\#{params[:controller].capitalize}"        
       #sidebar
         This is the sidebar
       #content
@@ -62,25 +61,9 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     #footer
       This is the footer
     = javascript_include_tag :jquery
-    = javascript_include_tag "#{params[:controller]}"
+    = javascript_include_tag "\#{params[:controller]}"
 HAML
 
-inject_into_file 'app/helpers/application_helper.rb',  :after => 'module ApplicationHelper' do
-  <<-APPLICATION_HELPER
-  
-  def title(page_title)
-    content_for(:title, page_title.to_s)
-  end
-  
-  def stylesheet(*args)
-    content_for(:head) { stylesheet_link_tag(*args) }
-  end
-  
-  def javascript(*args)
-    content_for(:head) { javascript_include_tag(*args) }
-  end
-  APPLICATION_HELPER
-end
 
 file 'lib/templates/haml/scaffold/_form.html.haml.erb', <<-FORM
 = semantic_form_for @<%= singular_name %> do |form|
@@ -122,7 +105,7 @@ application <<-GENERATORS
     config.generators do |g| 
       g.orm  :active_record  
       g.scaffold_controller :responders_controller  
-      g.template_engine :haml  
+      g.template_engine :jayway  
       g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false 
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
@@ -141,6 +124,7 @@ run "rvm #{current_ruby}@#{app_name} gem install bundler"
 run "rvm #{current_ruby}@#{app_name} -S bundle install"
 
 # Run the generators
+run "rvm #{current_ruby}@#{app_name} -S rails g responders:install"
 run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
 run "rvm #{current_ruby}@#{app_name} -S rails g cucumber:skeleton --rspec --capybara"  
 run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
