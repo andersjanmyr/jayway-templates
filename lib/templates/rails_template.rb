@@ -12,15 +12,15 @@ gem 'awesome_print', :group => :development
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.13', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.13', :group => :test
+gem 'rspec', '>= 2.0.0.beta.15', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.15', :group => :test
 gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
 
 # Cucumber integration test
 gem 'capybara', :group => :test
 gem 'database_cleaner', :group => :test
 gem 'cucumber-rails', :group => :test
-gem 'cucumber', '0.7.2', :group => :test
+gem 'cucumber', :group => :test
 gem 'spork', :group => :test
 gem 'launchy', :group => :test
 gem 'cucumber', :group => :test
@@ -113,7 +113,7 @@ run "rvm #{current_ruby}@#{app_name} -S bundle install"
 # Run the generators
 run "rvm #{current_ruby}@#{app_name} -S rails g responders:install"
 run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
-run "rvm #{current_ruby}@#{app_name} -S rails g cucumber:skeleton --rspec --capybara"  
+run "rvm #{current_ruby}@#{app_name} -S rails g cucumber:install --rspec --capybara"  
 run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
 
 # Replace the compass/blueprint stylesheets
