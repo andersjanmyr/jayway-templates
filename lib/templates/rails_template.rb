@@ -12,8 +12,8 @@ gem 'awesome_print', :group => :development
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.15', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.15', :group => :test
+gem 'rspec', '>= 2.0.0.beta.19', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.19', :group => :test
 gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
 
 # Cucumber integration test
@@ -24,18 +24,16 @@ gem 'cucumber', :group => :test
 gem 'spork', :group => :test
 gem 'launchy', :group => :test
 gem 'cucumber', :group => :test
-gem 'pickle', :group => :test
 
 # Install View
 gem 'haml'
 gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
 gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
-gem 'compass'
 gem 'responders'
 
 # Authentication
-gem 'devise', '1.1.rc1'
+gem 'devise', '1.1.rc2'
 
 remove_file 'app/views/layouts/application.html.erb'
 file 'app/views/layouts/application.html.haml' , <<-HAML 
