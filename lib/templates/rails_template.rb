@@ -12,9 +12,9 @@ gem 'awesome_print', :group => :development
 # Replace test framework
 remove_dir 'test'
 # run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.19', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.19', :group => :test
-gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3', :group => :test
+gem 'rspec', '>= 2.0.0.beta.20', :group => :test
+gem 'rspec-rails', '>= 2.0.0.beta.20', :group => :test
+gem 'factory_girl_rails', :group => :test
 
 # Cucumber integration test
 gem 'capybara', :group => :test
@@ -27,16 +27,18 @@ gem 'cucumber', :group => :test
 
 # Install View
 gem 'haml'
+gem 'haml-rails'
 gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
-gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic.git', :branch => 'rails3'
+gem 'formtastic'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'responders'
+gem 'compass'
 
 # Authentication
-gem 'devise', '1.1.rc2'
+gem 'devise', '>= 1.1.rc2'
 
 remove_file 'app/views/layouts/application.html.erb'
-file 'app/views/layouts/application.html.haml' , <<-HAML 
+file 'app/views/layouts/application.html.haml' , <<-HAML
 !!!
 %html
   %head
@@ -50,12 +52,12 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
   %body.bp
     #container.showgrid
       #header
-        %h1= yield(:title) || "\#{params[:controller].capitalize}"        
+        %h1= yield(:title) || "\#{params[:controller].capitalize}"
       #sidebar
         This is the sidebar
       #content
         = yield
-      #container-footer      
+      #container-footer
     #footer
       This is the footer
     = javascript_include_tag :jquery
@@ -71,7 +73,7 @@ ActionView::Helpers::AssetTagHelper.register_javascript_expansion \
 else
 ActionView::Helpers::AssetTagHelper.register_javascript_expansion \
   :jquery => %w(jquery.min jquery-ui.min rails)
-end    
+end
 JQUERY
 
 remove_file 'public/javascripts/controls.js'
@@ -81,38 +83,31 @@ remove_file 'public/javascripts/prototype.js'
 remove_file 'public/javascripts/rails.js'
 get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js', 'public/javascripts/jquery.js'
 get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'public/javascripts/jquery.min.js'
-get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.js', 'public/javascripts/jquery-ui.js'
-get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js', 'public/javascripts/jquery-ui.min.js'
+get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.js', 'public/javascripts/jquery-ui.js'
+get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js', 'public/javascripts/jquery-ui.min.js'
 get 'http://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javascripts/rails.js'
 
 # Configure Rails Generators
 application <<-GENERATORS
-    config.generators do |g| 
-      g.orm  :active_record  
-      g.scaffold_controller :responders_controller  
-      g.template_engine :jayway  
-      g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false 
+    config.generators do |g|
+      g.orm  :active_record
+      g.scaffold_controller :responders_controller
+      g.template_engine :jayway
+      g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
       g.stylesheets false
-    end 
+    end
 GENERATORS
 
-# RVM
-file ".rvmrc", <<-RVMRC
-rvm gemset use #{app_name}
-RVMRC
-
-current_ruby =  /^(.*):/.match(%x{rvm info})[1]
-run "rvm gemset create #{app_name}"
-run "rvm #{current_ruby}@#{app_name} gem install bundler"
-run "rvm #{current_ruby}@#{app_name} -S bundle install"
+run "gem install bundler"
+run "bundle install"
 
 # Run the generators
-run "rvm #{current_ruby}@#{app_name} -S rails g responders:install"
-run "rvm #{current_ruby}@#{app_name} -S rails g rspec:install"
-run "rvm #{current_ruby}@#{app_name} -S rails g cucumber:install --rspec --capybara"  
-run "rvm #{current_ruby}@#{app_name} -S compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets" 
+run "rails g responders:install"
+run "rails g rspec:install"
+run "rails g cucumber:install --rspec --capybara"
+run "compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets"
 
 # Replace the compass/blueprint stylesheets
 remove_file 'app/stylesheets/partials/_two_col.scss'
@@ -137,7 +132,7 @@ form {
   @include column(16);
   @include append(8);
   @include last;
-  @include blueprint-form;  
+  @include blueprint-form;
 }
 
 form label {
@@ -159,12 +154,12 @@ body.bp {
   @include blueprint-typography(true);
   @include blueprint-utilities;
   @include blueprint-debug;
-  @include blueprint-interaction; 
+  @include blueprint-interaction;
 
   #container {
     @include column(24, true);
     #header {
-      @include column(24, true);    
+      @include column(24, true);
     }
     #sidebar {
       @include column(4);
@@ -191,33 +186,9 @@ body.bp {
   @include blueprint-print(true); }
 PRINT_SCSS
 
-remove_file 'app/stylesheets/screen.scss'
-file 'app/stylesheets/screen.scss', <<-SCREEN_SCSS
-@import "blueprint/reset";
 
-@import "partials/base"; // Load before blueprint, configures variables
-
-@import "compass/layout";
-@import "blueprint";
-
-@import "partials/page";
-@import "partials/form";
-SCREEN_SCSS
 
 
 # Git
 run 'touch db/.gitkeep lib/tasks/.gitkeep log/.gitkeep tmp/.gitkeep public/stylesheets/.gitkeep vendor/plugins/.gitkeep'
 
-append_file '.gitignore' , <<-GIT 
-.DS_Store
-.bundle
-.idea
-db/*.sqlite3
-log/*.log
-public/stylesheets/*.css
-tmp/**/*
-GIT
-
-git :init
-git :add => '.'
-git :commit => '-a -m "Initial commit"'
