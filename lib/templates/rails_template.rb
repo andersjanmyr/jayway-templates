@@ -11,10 +11,9 @@ gem 'awesome_print', :group => :development
 
 # Replace test framework
 remove_dir 'test'
-# run 'gem install rspec-rails --pre'
-gem 'rspec', '>= 2.0.0.beta.20', :group => :test
-gem 'rspec-rails', '>= 2.0.0.beta.20', :group => :test
-gem 'factory_girl_rails', :group => :test
+gem 'rspec', :group => :test
+gem 'rspec-rails', :group => :test
+gem 'factory_girl_rails', :group => :test, :git => 'http://github.com/msgehard/factory_girl_rails.git'
 
 # Cucumber integration test
 gem 'capybara', :group => :test
@@ -32,7 +31,6 @@ gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates
 gem 'formtastic'
 get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
 gem 'responders'
-gem 'compass'
 
 # Authentication
 gem 'devise', '>= 1.1.rc2'
@@ -49,8 +47,8 @@ file 'app/views/layouts/application.html.haml' , <<-HAML
     = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = csrf_meta_tag
     = yield(:head)
-  %body.bp
-    #container.showgrid
+  %body
+    #container
       #header
         %h1= yield(:title) || "\#{params[:controller].capitalize}"
       #sidebar
@@ -93,7 +91,7 @@ application <<-GENERATORS
       g.orm  :active_record
       g.scaffold_controller :responders_controller
       g.template_engine :jayway
-      g.test_framework :rspec, :fixture => true, :views => false, :view_specs => false
+      g.test_framework :rspec, :fixture => true, :view_specs => false
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
       g.stylesheets false
@@ -107,86 +105,10 @@ run "bundle install"
 run "rails g responders:install"
 run "rails g rspec:install"
 run "rails g cucumber:install --rspec --capybara"
-run "compass create . --using blueprint/semantic --app rails --sass-dir app/stylesheets --css-dir public/stylesheets"
 
-# Replace the compass/blueprint stylesheets
-remove_file 'app/stylesheets/partials/_two_col.scss'
-
-remove_file 'app/stylesheets/ie.scss'
-file 'app/stylesheets/ie.scss', <<-IE_SCSS
-@import "blueprint";
-
-//@include blueprint-ie;
-IE_SCSS
-
-remove_file 'app/stylesheets/partials/_base.scss'
-file 'app/stylesheets/partials/_base.scss', <<-BASE_SCSS
-$blueprint_liquid_grid_columns: 24;
-$blueprint_liquid_container_width: 80%;
-$blueprint_liquid_container_min_width: 950px;
-BASE_SCSS
-
-remove_file 'app/stylesheets/partials/_form.scss'
-file 'app/stylesheets/partials/_form.scss', <<-FORM_SCSS
-form {
-  @include column(16);
-  @include append(8);
-  @include last;
-  @include blueprint-form;
-}
-
-form label {
-  display:block;
-}
-
-form li {
-  list-style: none;
-}
-FORM_SCSS
-
-remove_file 'app/stylesheets/partials/_page.scss'
-file 'app/stylesheets/partials/_page.scss', <<-PAGE_SCSS
-@import "blueprint/debug";
-
-@include sticky-footer(54px, "#container", "#container-footer", "#footer");
-
-body.bp {
-  @include blueprint-typography(true);
-  @include blueprint-utilities;
-  @include blueprint-debug;
-  @include blueprint-interaction;
-
-  #container {
-    @include column(24, true);
-    #header {
-      @include column(24, true);
-    }
-    #sidebar {
-      @include column(4);
-    }
-
-    #content {
-      @include column(20, true);
-    }
-    #container-footer {
-      @include column(24, true);
-    }
-  }
-  #footer {
-    @include column(24, true);
-  }
-}
-PAGE_SCSS
-
-remove_file 'app/stylesheets/print.scss'
-file 'app/stylesheets/print.scss', <<-PRINT_SCSS
-@import "blueprint";
-
-body.bp {
-  @include blueprint-print(true); }
-PRINT_SCSS
-
-
+initializer 'sass.rb', <<-SASS
+  Sass::Plugin.options[:template_location] = './app/stylesheets'
+SASS
 
 
 # Git
