@@ -28,8 +28,7 @@ gem 'cucumber', :group => :test
 gem 'haml'
 gem 'haml-rails'
 gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
-gem 'formtastic'
-get 'http://github.com/justinfrench/formtastic/raw/master/generators/formtastic/templates/formtastic.rb', 'config/initializers/formtastic.rb'
+gem 'simple_form'
 gem 'responders'
 
 # Authentication
@@ -83,7 +82,7 @@ get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js', 'public/javas
 get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'public/javascripts/jquery.min.js'
 get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.js', 'public/javascripts/jquery-ui.js'
 get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js', 'public/javascripts/jquery-ui.min.js'
-get 'http://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javascripts/rails.js'
+get 'https://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javascripts/rails.js'
 
 # Configure Rails Generators
 application <<-GENERATORS
