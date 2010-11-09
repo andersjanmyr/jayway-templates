@@ -27,7 +27,6 @@ gem 'cucumber', :group => :test
 # Install View
 gem 'haml'
 gem 'haml-rails'
-gem 'jayway-templates', :git => 'http://github.com/andersjanmyr/jayway-templates.git'
 gem 'simple_form'
 gem 'responders'
 
@@ -89,7 +88,7 @@ application <<-GENERATORS
     config.generators do |g|
       g.orm  :active_record
       g.scaffold_controller :responders_controller
-      g.template_engine :jayway
+      g.template_engine :haml
       g.test_framework :rspec, :fixture => true, :view_specs => false
       g.integration_tool :cucumber
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
@@ -102,6 +101,7 @@ run "bundle install"
 
 # Run the generators
 run "rails g responders:install"
+run "rails g simple_form:install"
 run "rails g rspec:install"
 run "rails g cucumber:install --rspec --capybara"
 
