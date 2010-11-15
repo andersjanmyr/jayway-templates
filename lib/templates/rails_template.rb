@@ -18,11 +18,8 @@ gem 'factory_girl_rails', :group => :test, :git => 'http://github.com/msgehard/f
 # Cucumber integration test
 gem 'capybara', :group => :test
 gem 'database_cleaner', :group => :test
-gem 'cucumber-rails', :group => :test
-gem 'cucumber', :group => :test
 gem 'spork', :group => :test
 gem 'launchy', :group => :test
-gem 'cucumber', :group => :test
 
 # Install View
 gem 'haml'
@@ -90,7 +87,7 @@ application <<-GENERATORS
       g.scaffold_controller :responders_controller
       g.template_engine :haml
       g.test_framework :rspec, :fixture => true, :view_specs => false
-      g.integration_tool :cucumber
+      g.integration_tool :rspec
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'
       g.stylesheets false
     end
@@ -103,7 +100,6 @@ run "bundle install"
 run "rails g responders:install"
 run "rails g simple_form:install"
 run "rails g rspec:install"
-run "rails g cucumber:install --rspec --capybara"
 
 initializer 'sass.rb', <<-SASS
   Sass::Plugin.options[:template_location] = './app/stylesheets'
