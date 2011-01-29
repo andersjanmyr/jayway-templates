@@ -102,6 +102,14 @@ copy_file 'app/views/layouts/application.html.haml'
 # Copy the spec helper
 copy_file 'spec/spec_helper.rb'
 
+# Copy the lib files
+`mkdir -p lib/tasks/`
+copy_file 'lib/tasks/heroku.rake'
+`mkdir -p lib/templates/haml/scaffold/`
+copy_file 'lib/templates/haml/scaffold/_form.html.haml'
+copy_file 'lib/templates/haml/scaffold/index.html.haml'
+
+
 initializer 'sass.rb', <<-SASS
 Sass::Plugin.options[:template_location] = './app/stylesheets'
 Sass::Plugin.remove_template_location('./app/stylesheets')
@@ -111,17 +119,23 @@ Sass::Plugin.add_template_location(
   Rails.root.join('./tmp/stylesheets').to_s)
 SASS
 
-# Copy the lib files
-`mkdir -p lib/tasks/`
-copy_file 'lib/tasks/heroku.rake'
-`mkdir -p lib/templates/haml/scaffold/`
-copy_file 'lib/templates/haml/scaffold/_form.html.haml'
-copy_file 'lib/templates/haml/scaffold/index.html.haml'
 
+create_file 'config/s3.yml', <<-S3
+development:
+  bucket: app-development
+  access_key_id: XXXXXXXXXXXXXXXXXXXX
+  secret_access_key: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/spec/spec_helper.rb', 'spec/spec_helper.rb'
+test:
+  bucket: app-test
+  access_key_id: XXXXXXXXXXXXXXXXXXXX
+  secret_access_key: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
-
+production:
+  bucket: app-production
+  access_key_id: XXXXXXXXXXXXXXXXXXXX
+  secret_access_key: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+S3
 
 
 # Git
