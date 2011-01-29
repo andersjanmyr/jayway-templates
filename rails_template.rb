@@ -70,7 +70,7 @@ application <<-GENERATORS
 GENERATORS
 
 def copy_file name
-  get "'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/#{name}", name
+  get "https://github.com/andersjanmyr/jayway-templates/raw/master/rails/#{name}", name
 end
 
 copy_file 'Gemfile'
