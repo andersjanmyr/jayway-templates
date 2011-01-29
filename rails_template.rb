@@ -114,8 +114,8 @@ SASS
 # Copy the lib files
 `mkdir -p lib/tasks/`
 copy_file 'lib/tasks/heroku.rake'
-copy_file 'lib/templates/haml/scaffold/_form.html.haml'
 `mkdir -p lib/templates/haml/scaffold/`
+copy_file 'lib/templates/haml/scaffold/_form.html.haml'
 copy_file 'lib/templates/haml/scaffold/index.html.haml'
 
 
