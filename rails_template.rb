@@ -69,7 +69,11 @@ application <<-GENERATORS
   end
 GENERATORS
 
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/Gemfile'
+def copy_file name
+  get "'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/#{name}", name
+end
+
+copy_file 'Gemfile'
 
 run "gem install bundler"
 run "bundle install"
@@ -83,19 +87,20 @@ run "rails g simple_form:install"
 run "rails g rspec:install"
 
 # Copy livereload and rspec configs
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/.livereload' 
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/.rspec' 
+copy_file '.livereload' 
+copy_file '.rspec' 
 
 # Copy the stylesheets
-`mkdir -p app/stylesheets`
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/app/stylesheets/mixins.scss', 'app/stylesheets/mixins.scss'
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/app/stylesheets/screen.scss', 'app/stylesheets/screen.scss'
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/app/stylesheets/print.scss', 'app/stylesheets/print.scss'
+`mkdir -p app/stylesheets/`
+copy_file 'app/stylesheets/mixins.scss'
+copy_file 'app/stylesheets/screen.scss'
+copy_file 'app/stylesheets/print.scss'
 
 # Copy the layout template
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/app/views/layouts/application.html.haml', 'app/views/layouts/application.html.haml'
+copy_file 'app/views/layouts/application.html.haml'
 
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/spec/spec_helper.rb', 'spec/spec_helper.rb'
+# Copy the spec helper
+copy_file 'spec/spec_helper.rb'
 
 initializer 'sass.rb', <<-SASS
 Sass::Plugin.options[:template_location] = './app/stylesheets'
@@ -107,6 +112,16 @@ Sass::Plugin.add_template_location(
 SASS
 
 # Copy the lib files
+`mkdir -p lib/tasks/`
+copy_file 'lib/tasks/heroku.rake'
+copy_file 'lib/templates/haml/scaffold/_form.html.haml'
+`mkdir -p lib/templates/haml/scaffold/`
+copy_file 'lib/templates/haml/scaffold/index.html.haml'
+
+
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/rails/spec/spec_helper.rb', 'spec/spec_helper.rb'
+
+
 
 
 # Git
