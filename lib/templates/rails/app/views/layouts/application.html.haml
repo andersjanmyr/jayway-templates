@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %title= yield(:title)
+    = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'print.css', :media => 'print'
+    /[if lt IE 8]
+    = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+    = csrf_meta_tag
+    = yield(:head)
+  %body
+    #container
+      #header
+        %h1
+          %a{:href => "/"} Helios
+        #devise-panel
+          - if admin_signed_in?
+            .current-admin= current_admin.email
+            = link_to "Sign out", destroy_admin_session_path
+          - elsif params[:controller] != 'devise/sessions'
+            = link_to "Sign in", new_admin_session_path
+        #nav
+
+      #sidebar
+        This is the sidebar
+      #content
+        %h2= yield(:title) || "\#{params[:controller].capitalize}"
+        = yield
+      #container-footer
+    #footer
+      This is the footer
+    = javascript_include_tag :jquery
+    = javascript_include_tag "\#{params[:controller]}"
+

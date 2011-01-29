@@ -1,35 +1,7 @@
 # Application template for Jayway projects
 
-#Development
-gem "ruby-debug19", :group => :development
-gem 'looksee', :group => :development
-gem 'wirble', :group => :development
-gem 'hirb', :group => :development
-gem 'map_by_method', :group => :development
-gem 'what_methods', :group => :development
-gem 'awesome_print', :group => :development
-
-# Replace test framework
-remove_dir 'test'
-gem 'rspec', :group => :test
-gem 'rspec-rails', :group => :test
-gem 'factory_girl_rails', :group => :test, :git => 'http://github.com/msgehard/factory_girl_rails.git'
-
-# Cucumber integration test
-gem 'capybara', :group => :test
-gem 'database_cleaner', :group => :test
-gem 'spork', :group => :test
-gem 'launchy', :group => :test
-
-# Install View
-gem 'haml'
-gem 'haml-rails'
-gem 'simple_form'
-gem 'responders'
-
-# Authentication
-gem 'devise', '>= 1.1.rc2'
-
+# Get Gemfile from github
+#
 remove_file 'app/views/layouts/application.html.erb'
 file 'app/views/layouts/application.html.haml' , <<-HAML
 !!!
@@ -82,19 +54,27 @@ get 'https://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javas
 
 # Configure Rails Generators
 application <<-GENERATORS
-    config.generators do |g|
-      g.orm  :active_record
-      g.scaffold_controller :responders_controller
-      g.template_engine :haml
-      g.test_framework :rspec, :fixture => true, :view_specs => false
-      g.integration_tool :rspec
-      g.fixture_replacement :factory_girl, :dir => 'spec/factories'
-      g.stylesheets false
-    end
+  config.middleware.insert_before(ActionDispatch::Static, Rack::Static,
+            :root => "tmp", :urls => ["/stylesheets/screen.css",
+            "/stylesheets/print.css", "/stylesheets/ie.css"])
+    
+  config.generators do |g| g.orm  :active_record
+    g.scaffold_controller :responders_controller
+    g.template_engine :haml
+    g.test_framework :rspec, :fixture => true, :view_specs => false
+    g.integration_tool :rspec
+    g.fixture_replacement :factory_girl, :dir => 'spec/factories'
+    g.stylesheets false
+  end
 GENERATORS
+
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails'
 
 run "gem install bundler"
 run "bundle install"
+
+# Replace test framework
+remove_dir 'test'
 
 # Run the generators
 run "rails g responders:install"
@@ -102,7 +82,12 @@ run "rails g simple_form:install"
 run "rails g rspec:install"
 
 initializer 'sass.rb', <<-SASS
-  Sass::Plugin.options[:template_location] = './app/stylesheets'
+Sass::Plugin.options[:template_location] = './app/stylesheets'
+Sass::Plugin.remove_template_location('./app/stylesheets')
+
+Sass::Plugin.add_template_location(
+  Rails.root.join('./app/stylesheets').to_s,
+  Rails.root.join('./tmp/stylesheets').to_s)
 SASS
 
 

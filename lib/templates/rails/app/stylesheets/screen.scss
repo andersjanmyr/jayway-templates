@@ -1,0 +1,102 @@
+@import "mixins.scss";
+
+@include reset;
+
+$main-color: #36393D;
+$header-text-color: white;
+$secondary-color: #eee;
+$font-default-size: 14px;
+$border-radius: 2em;
+$message-border-radius: $border-radius/2;
+$alert-color: pink;
+$notice-color: lightgreen;
+$medium-size: 1.2em;
+
+
+body {
+    font-size: $font-default-size;
+    background-color: $secondary-color;
+    font-family: helvetica,arial,sans-serif;
+}
+
+#container {
+    width: 100%;
+    h1, h2, h3 {
+        font-family: helvetica,arial,sans-serif;
+        color: $main-color;
+    }
+    h1 { font-size: 2.5em; padding: 1em 0 0 0;}
+    h2 { font-size: 1.8em; padding: 0 0 .8em 0;}
+}
+
+#header {
+    margin: 0;
+    background-color: $main-color;
+    color: $header-text-color;
+    padding: 0 1em;
+    padding-bottom: 2em;
+    @include border-radius($border-radius, $border-radius, 0, 0);
+
+    a, a:visited {
+        padding: .3em;
+        color: $header-text-color;
+        text-decoration: none;
+    }
+    a:hover, a:active {
+        background-color: #111;
+        @include sym-border-radius(4px);
+    }
+
+    #nav {
+        float: right;
+        padding-right: 2em;
+        position: relative;
+        top: -2.6em;
+
+        li {
+            float: left;
+            list-style-type: none;
+
+            a, a:visited {
+                display: block;
+                min-width: 5em;
+                margin: .5em;
+                padding: .5em;
+                background-color: $main-color;
+                color: $secondary-color;
+                @include border-radius($message-border-radius, $message-border-radius, 0, 0);
+                text-align: center;
+                font-weight: bold;
+                font-size: $medium-size;
+                border-style: solid;
+                border-width: .3em .3em 0 .3em;
+                border-color: $secondary-color;
+            }
+            a:hover, a:active {
+                background-color: #111;
+                color: $header-text-color;
+            }
+            a.selected {
+                background-color: $secondary-color;
+                color: $main-color;
+            }
+        }
+    }
+
+    #devise-panel {
+        float: right;
+    }
+}
+
+#sidebar {
+}
+
+#content {
+}
+
+#container-footer {
+}
+
+#footer {
+}
+

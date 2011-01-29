@@ -1,0 +1,4 @@
+--colour
+--drb
+# -- format does not work with --drb in rspec-2.4.0
+#--format documentation
