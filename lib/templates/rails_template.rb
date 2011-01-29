@@ -69,7 +69,7 @@ application <<-GENERATORS
   end
 GENERATORS
 
-`wget --no-check-certificate https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails`
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/Gemfile'
 
 run "gem install bundler"
 run "bundle install"
@@ -82,7 +82,20 @@ run "rails g responders:install"
 run "rails g simple_form:install"
 run "rails g rspec:install"
 
-get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/spec/spec_helper.rb', 'spec_helper.rb'
+# Copy livereload and rspec configs
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/.livereload' 
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/.rspec' 
+
+# Copy the stylesheets
+`mkdir -p app/stylesheets`
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/app/stylesheets/mixins.scss', 'app/stylesheets/mixins.scss'
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/app/stylesheets/screen.scss', 'app/stylesheets/screen.scss'
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/app/stylesheets/print.scss', 'app/stylesheets/print.scss'
+
+# Copy the layout template
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/app/views/layouts/application.html.haml', 'app/views/layouts/application.html.haml'
+
+get 'https://github.com/andersjanmyr/jayway-templates/raw/master/lib/templates/rails/spec/spec_helper.rb', 'spec/spec_helper.rb'
 
 initializer 'sass.rb', <<-SASS
 Sass::Plugin.options[:template_location] = './app/stylesheets'
@@ -92,6 +105,8 @@ Sass::Plugin.add_template_location(
   Rails.root.join('./app/stylesheets').to_s,
   Rails.root.join('./tmp/stylesheets').to_s)
 SASS
+
+# Copy the lib files
 
 
 # Git

@@ -7,7 +7,7 @@ gem "haml"
 gem "haml-rails"
 gem "simple_form"
 gem "responders"
-gem "devise", ">= 1.1.rc2"
+gem "devise"
 gem "will_paginate", "~> 3.0.pre2"
 gem 'acts-as-taggable-on'
 gem "rspec"
@@ -42,7 +42,6 @@ group :test, :development do
   gem "spork"
   gem "launchy"
   gem 'ci_reporter'
-  gem "web-app-theme", ">= 0.6.2"
   gem "hpricot"
   gem "ruby_parser"
   gem 'fuubar'
