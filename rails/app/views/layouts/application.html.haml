@@ -12,13 +12,13 @@
     #container
       #header
         %h1
-          %a{:href => "/"} Helios
+          %a{:href => "/"} APP NAME
         #devise-panel
-          - if admin_signed_in?
-            .current-admin= current_admin.email
-            = link_to "Sign out", destroy_admin_session_path
+          - if user_signed_in?
+            .current-user= current_user.email
+            = link_to "Sign out", destroy_user_session_path
           - elsif params[:controller] != 'devise/sessions'
-            = link_to "Sign in", new_admin_session_path
+            = link_to "Sign in", new_user_session_path
         #nav
 
       #sidebar
