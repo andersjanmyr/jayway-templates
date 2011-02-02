@@ -2,33 +2,6 @@
 
 # Get Gemfile from github
 #
-remove_file 'app/views/layouts/application.html.erb'
-file 'app/views/layouts/application.html.haml' , <<-HAML
-!!!
-%html
-  %head
-    %title= yield(:title)
-    = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'print.css', :media => 'print'
-    /[if lt IE 8]
-    = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
-    = csrf_meta_tag
-    = yield(:head)
-  %body
-    #container
-      #header
-        %h1= yield(:title) || "\#{params[:controller].capitalize}"
-      #sidebar
-        This is the sidebar
-      #content
-        = yield
-      #container-footer
-    #footer
-      This is the footer
-    = javascript_include_tag :jquery
-    = javascript_include_tag "\#{params[:controller]}"
-HAML
-
 
 # Replace prototype with jQuery.
 initializer 'jquery.rb', <<-JQUERY
@@ -52,6 +25,10 @@ remove_file 'public/javascripts/rails.js'
 get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js', 'public/javascripts/jquery.js'
 get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.js', 'public/javascripts/jquery-ui.js'
 get 'https://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javascripts/rails.js'
+
+# QUnit
+get 'http://code.jquery.com/qunit/git/qunit.js', 'public/javascripts/test/qunit.js'
+get 'http://code.jquery.com/qunit/git/qunit.css', 'public/javascripts/test/qunit.css'
 
 # Configure Rails Generators
 application <<-GENERATORS
@@ -109,6 +86,9 @@ copy_file 'lib/tasks/heroku.rake'
 copy_file 'lib/templates/haml/scaffold/_form.html.haml'
 copy_file 'lib/templates/haml/scaffold/index.html.haml'
 
+# Javascript tests
+copy_file 'public/javascripts/test/application_test.js'
+copy_file 'public/javascripts/test/test.html'
 
 initializer 'sass.rb', <<-SASS
 Sass::Plugin.options[:template_location] = './app/stylesheets'
