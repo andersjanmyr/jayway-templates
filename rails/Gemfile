@@ -17,6 +17,7 @@ gem 'newrelic_rpm'
 gem 'ancestry'
 gem 'aws-s3'
 gem 'paperclip'
+# gem 'rails-admin', git: 'https://github.com/andersjanmyr/rails_admin.git'
 
 group :development do
   gem "ruby-debug19"

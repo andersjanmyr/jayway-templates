@@ -22,7 +22,7 @@ remove_file 'public/javascripts/dragdrop.js'
 remove_file 'public/javascripts/effects.js'
 remove_file 'public/javascripts/prototype.js'
 remove_file 'public/javascripts/rails.js'
-get 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js', 'public/javascripts/jquery.js'
+get 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.js', 'public/javascripts/jquery.js'
 get 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.js', 'public/javascripts/jquery-ui.js'
 get 'https://github.com/rails/jquery-ujs/raw/master/src/rails.js', 'public/javascripts/rails.js'
 
@@ -82,6 +82,7 @@ copy_file 'spec/spec_helper.rb'
 # Copy the lib files
 `mkdir -p lib/tasks/`
 copy_file 'lib/tasks/heroku.rake'
+copy_file 'lib/tasks/rspec.rake'
 `mkdir -p lib/templates/haml/scaffold/`
 copy_file 'lib/templates/haml/scaffold/_form.html.haml'
 copy_file 'lib/templates/haml/scaffold/index.html.haml'
@@ -120,4 +121,5 @@ S3
 
 # Git
 run 'touch db/.gitkeep lib/tasks/.gitkeep log/.gitkeep tmp/.gitkeep public/stylesheets/.gitkeep vendor/plugins/.gitkeep'
+run 'git init'
 

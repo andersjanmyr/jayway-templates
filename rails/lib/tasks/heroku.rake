@@ -16,10 +16,6 @@ namespace :heroku do
         url = git@heroku.com:helios-server.git
         fetch = +refs/heads/*:refs/remotes/heroku/*
     GIT_INFO
-
-    
-    
   end
-    
 end
 
